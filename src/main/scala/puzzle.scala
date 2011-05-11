@@ -7,7 +7,7 @@ object puzzle extends Application {
   val colleges = Source.fromFile("college").getLines.foldLeft(new TreeSet[String]) { (tree,line) => tree + line }
 
   for (college <- colleges;
-       index <- 0 until college.length if oneLetterElements.contains(college(index));
-       newName <- twoLetterElements.map { college.patch(index, _, 1) } if colleges.contains(newName))
+       (c, index) <- college.zipWithIndex if oneLetterElements.contains(c);
+       newName <- twoLetterElements.map(college.patch(index, _, 1)) if colleges.contains(newName))
     printf("%s -> %s\n", college, newName)
 }
